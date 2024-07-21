@@ -131,15 +131,7 @@ table {
 .container {
   max-width: 1300px;
   width: 100%;
-  margin: 0 auto;
-}
-.logo {
-  font-size: 3rem;
-  background-color: black;
-  color: white;
-  padding: 1rem;
-  font-style: italic;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin: 4rem auto;
 }
 .flex {
   display: flex;
@@ -162,7 +154,8 @@ table {
   position: absolute;
   background-color: black;
   color: white;
-  padding: 10px;
+  padding: 5px;
+  right: 0;
 }
 
 .title {
@@ -202,7 +195,167 @@ table {
 h3 {
   font-size: 1.3rem;
   font-weight: 800;
+  display: block;
 }
 img {
   width: 60%;
+}
+
+.flex-60 {
+  flex: 1 1 70%;
+}
+.flex-20 {
+  flex: 0 1 20%;
+}
+.sidebar {
+  margin-top: 4rem;
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+}
+
+.size-btn {
+  font-size: 1.1rem;
+  border-radius: 50%;
+  padding: 10px;
+  margin: 1rem;
+  background-color: rgb(241, 241, 241);
+  border-color: white;
+  &:hover {
+    border: 3px solid black;
+  }
+}
+.closed-cart {
+  position: fixed;
+  top: 3rem;
+  right: 1rem;
+  span {
+    position: absolute;
+    background-color: yellow;
+    color: black;
+    left: 30px;
+    padding: 5px;
+    border-radius: 5px;
+    top: 30px;
+  }
+}
+.cart-btn {
+  font-size: 1.5rem;
+  color: white;
+  background-color: black;
+  padding: 0.7rem;
+  border-radius: 10px;
+}
+
+.cart {
+  position: fixed;
+  height: 100vh;
+  width: 40vw;
+  background-color: rgb(25, 25, 25);
+  top: 0;
+  right: 0;
+}
+.close-btn {
+  color: white;
+  padding: 20px;
+  font-size: 2rem;
+  position: relative;
+  left: -3rem;
+  background-color: rgb(25, 25, 25);
+  cursor: pointer;
+}
+.icon {
+  font-size: 4rem;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.quantity {
+  position: relative;
+  top: -5rem;
+  left: 49%;
+  background-color: yellow;
+  color: black;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 50%;
+}
+
+/* cart-item*/
+
+.cart-item {
+  padding: 1rem;
+  color: white;
+  border: 2px solid black;
+}
+.item-info {
+  width: 70%;
+  h3 {
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    margin: 10px 0;
+  }
+  span,
+  p {
+    margin: 10px 0;
+    color: gray;
+  }
+}
+
+.cancel-btn {
+  background-color: rgb(25, 25, 25);
+  color: black;
+  font-size: 1.3rem;
+  float: right;
+  border: none;
+  font-weight: 900;
+  &:hover {
+    color: white;
+  }
+}
+.item-price {
+  color: orange;
+  font-size: 1.6rem;
+}
+.i-btn {
+  background-color: black;
+  border: none;
+  color: gray;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  &:hover {
+    background-color: rgb(25, 25, 25);
+    color: white;
+  }
+}
+
+/* checkout section */
+
+.checkout {
+  color: gray;
+  position: fixed;
+  bottom: 0;
+  h3 {
+    font-size: 2rem;
+    margin: 1rem;
+    text-transform: capitalize;
+  }
+}
+.total-price {
+  span {
+    color: orange;
+    font-size: 2rem;
+  }
+  p {
+    margin: 1rem;
+  }
+}
+.checkout-btn {
+  background-color: gray;
+  color: whitesmoke;
+  padding: 1rem;
+  width: 40vw;
+  margin: 0 auto;
+  font-size: 1.4rem;
 }

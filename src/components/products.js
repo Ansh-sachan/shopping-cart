@@ -1,49 +1,52 @@
 import { Component } from 'react';
-import data from './data.json';
 
 class Products extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   render() {
     return (
       <>
-        <h3>{`${data.products.length} product(s) found`}</h3>
+        <h3>{`${this.props.data.length} product(s) found`}</h3>
         <div className="flex wrap">
-          {data.products.map((item) => {
-            return (
-              <>
-                <div className="product-info">
-                  <div className="shipping">
-                    {item.isFreeShipping ? 'Free Shipping' : ''}
-                  </div>
-                  <div>
-                    {' '}
-                    <img
-                      src={`/products/${item.sku}_1.jpg`}
-                      alt="error to load"
-                    />
-                  </div>
-                  <p className="title">{item.title}</p>
-                  <div className="price">
-                    <span className="currencyFormat">
-                      {item.currencyFormat}
-                    </span>
-                    <bold>{item.price}</bold>
-                  </div>
-                  <div className="emi">
-                    {`or ${item.installments} x ${
-                      item.currencyFormat +
-                      Math.round(item.price / item.installments)
-                    }`}
-                  </div>
-                  <button className="btn">Add To Cart</button>
-                </div>
-              </>
-            );
+          {this.props.data.map((item) => {
+            return <Product info={item} />;
           })}
         </div>
       </>
     );
   }
+}
+
+function Product(props) {
+  return (
+    <>
+      <div className="product-info">
+        <div>
+          {props.info.isFreeShipping ? (
+            <p className="shipping">Free Shipping</p>
+          ) : null}
+        </div>
+        <div>
+          {' '}
+          <img src={`/products/${props.info.sku}_1.jpg`} alt="error to load" />
+        </div>
+        <p className="title">{props.info.title}</p>
+        <div className="price">
+          <span className="currencyFormat">{props.info.currencyFormat}</span>
+          <bold>{props.info.price}</bold>
+        </div>
+        <div className="emi">
+          {`or ${props.info.installments} x ${
+            props.info.currencyFormat +
+            Math.round(props.info.price / props.info.installments)
+          }`}
+        </div>
+        <button className="btn">Add To Cart</button>
+      </div>
+    </>
+  );
 }
 
 export default Products;
