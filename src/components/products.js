@@ -1,16 +1,54 @@
 import { Component } from 'react';
-
+import Filter from './filter';
+import Sizes from './sizes';
 class Products extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      selectedOrder: '',
+    };
   }
+  handleOrder = ({ target }) => {
+    this.setState({
+      selectedOrder: target.value,
+    });
+  };
+
+  handleOrderProducts = (order, sizes, products) => {
+    let sortedProduct = [...products];
+    if (sizes.length >= 1) {
+      for (let size of sizes) {
+        sortedProduct = sortedProduct.filter((p) =>
+          p.availableSizes.includes(size)
+        );
+      }
+    }
+    if (order === 'highest') {
+      sortedProduct = sortedProduct.sort((a, b) => b.price - a.price);
+    }
+    if (order === 'lowest') {
+      sortedProduct = sortedProduct.sort((a, b) => a.price - b.price);
+    }
+    return sortedProduct;
+  };
+
   render() {
+    let { selectedOrder } = this.state;
+    let products = this.handleOrderProducts(
+      selectedOrder,
+      this.props.selectedSizes,
+      this.props.data
+    );
     return (
       <>
-        <h3>{`${this.props.data.length} product(s) found`}</h3>
+        <div className="flex">
+          <h3>{`${products.length} product${
+            products.length > 1 ? 's' : ''
+          } found`}</h3>
+          <Filter order={selectedOrder} handleOrder={this.handleOrder} />
+        </div>
         <div className="flex wrap">
-          {this.props.data.map((item) => {
+          {products.map((item) => {
             return <Product info={item} />;
           })}
         </div>

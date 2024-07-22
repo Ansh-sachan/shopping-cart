@@ -359,3 +359,15 @@ img {
   margin: 0 auto;
   font-size: 1.4rem;
 }
+.filter {
+  width: 3;
+  margin-right: 2rem;
+  select {
+    padding: 10px;
+    border-radius: 10px;
+  }
+}
+
+.active {
+  background-color: rgb(255, 235, 9);
+}
