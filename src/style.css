@@ -250,12 +250,13 @@ img {
 }
 
 .cart {
-  position: fixed;
-  height: 100vh;
+  position: absolute;
   width: 40vw;
   background-color: rgb(25, 25, 25);
   top: 0;
   right: 0;
+  scroll-behavior: smooth;
+  z-index: 2;
 }
 .close-btn {
   color: white;
@@ -319,22 +320,28 @@ img {
   font-size: 1.6rem;
 }
 .i-btn {
-  background-color: black;
-  border: none;
-  color: gray;
-  margin: 1rem 0;
-  font-size: 1.2rem;
-  &:hover {
-    background-color: rgb(25, 25, 25);
-    color: white;
+  width: 50px;
+  margin-left: 3rem;
+  button {
+    background-color: black;
+    border: none;
+    color: gray;
+    margin: 1rem 0;
+    font-size: 1.2rem;
+    &:hover {
+      background-color: rgb(25, 25, 25);
+      color: white;
+    }
   }
 }
 
 /* checkout section */
 
 .checkout {
+  background-color: rgb(25, 25, 25);
+  z-index: 4;
   color: gray;
-  position: fixed;
+  position: sticky;
   bottom: 0;
   h3 {
     font-size: 2rem;

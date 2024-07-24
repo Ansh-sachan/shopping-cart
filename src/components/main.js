@@ -5,7 +5,11 @@ function Main(props) {
   return (
     <>
       <div className="flex-60">
-        <Products data={data.products} selectedSizes={props.selectedSizes} />
+        <Products
+          data={data.products}
+          selectedSizes={props.selectedSizes}
+          handleCart={props.handleCart}
+        />
       </div>
     </>
   );

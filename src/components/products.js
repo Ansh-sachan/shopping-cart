@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import Filter from './filter';
-import Sizes from './sizes';
 class Products extends Component {
   constructor(props) {
     super(props);
@@ -49,7 +48,13 @@ class Products extends Component {
         </div>
         <div className="flex wrap">
           {products.map((item) => {
-            return <Product info={item} />;
+            return (
+              <Product
+                info={item}
+                handleCart={this.props.handleCart}
+                key={item.id}
+              />
+            );
           })}
         </div>
       </>
@@ -73,7 +78,7 @@ function Product(props) {
         <p className="title">{props.info.title}</p>
         <div className="price">
           <span className="currencyFormat">{props.info.currencyFormat}</span>
-          <bold>{props.info.price}</bold>
+          <span>{props.info.price}</span>
         </div>
         <div className="emi">
           {`or ${props.info.installments} x ${
@@ -81,7 +86,9 @@ function Product(props) {
             Math.round(props.info.price / props.info.installments)
           }`}
         </div>
-        <button className="btn">Add To Cart</button>
+        <button className="btn" onClick={() => props.handleCart(props.info)}>
+          Add To Cart
+        </button>
       </div>
     </>
   );

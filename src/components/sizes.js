@@ -21,6 +21,7 @@ function Sizes(props) {
                     : 'size-btn'
                 }
                 onClick={() => props.handleClick(size)}
+                key={size}
               >
                 {size}
               </button>
