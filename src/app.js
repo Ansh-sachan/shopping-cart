@@ -2,18 +2,15 @@ import React from 'react';
 import Cart from './components/cart';
 import Main from './components/main';
 import Sizes from './components/sizes';
+import { handleCart, handleClick } from './store/action';
+import { connect } from 'react-redux';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedSizes: [],
-      cartItems: [],
-    };
-  }
   componentDidMount() {
-    if (localStorage.carts) {
-      this.setState({ cartItems: JSON.parse(localStorage.carts) });
+    let { handleCart } = this.props;
+    let savedCart = localStorage.getItem('carts');
+    if (savedCart) {
+      handleCart(JSON.parse(savedCart));
     }
     window.addEventListener('beforeunload', this.handleUpdateLocalStorage);
   }
@@ -23,91 +20,33 @@ class App extends React.Component {
   }
 
   handleUpdateLocalStorage = () => {
-    localStorage.setItem('carts', JSON.stringify(this.state.cartItems));
-  };
-
-  handleClick = (size) => {
-    if (this.state.selectedSizes.includes(size)) {
-      this.setState((prevState) => ({
-        selectedSizes: prevState.selectedSizes.filter((s) => s !== size),
-      }));
-    } else {
-      this.setState((prevState) => ({
-        selectedSizes: prevState.selectedSizes.concat(size),
-      }));
-    }
-  };
-  handleCart = (p) => {
-    let isPresent =
-      this.state.cartItems.findIndex((product) => product.id === p.id) !== -1;
-    if (isPresent) {
-      this.quantityIncrement(p.id);
-    } else {
-      this.setState((prevState) => ({
-        cartItems: prevState.cartItems.concat({ ...p, quantity: 1 }),
-      }));
-    }
-  };
-  quantityIncrement = (id) => {
-    this.setState((prevState) => {
-      let updatedCart = prevState.cartItems.map((p) => {
-        if (id === p.id) {
-          return {
-            ...p,
-            quantity: p.quantity + 1,
-          };
-        }
-        return p;
-      });
-      return {
-        cartItems: updatedCart,
-      };
-    });
-  };
-  quantityDecrement = (id) => {
-    this.setState((prevState) => {
-      let updatedCart = prevState.cartItems.map((p) => {
-        if (id === p.id && p.quantity > 1) {
-          return {
-            ...p,
-            quantity: p.quantity - 1,
-          };
-        }
-        return p;
-      });
-      return {
-        cartItems: updatedCart,
-      };
-    });
-  };
-  handleDelete = (id) => {
-    this.setState((prevState) => {
-      let updatedCart = prevState.cartItems.filter((p) => {
-        return p.id !== id;
-      });
-      return {
-        cartItems: updatedCart,
-      };
-    });
+    localStorage.setItem('carts', JSON.stringify(this.props.cartItems));
   };
 
   render() {
-    let { selectedSizes } = this.state;
+    let { selectedSizes, cartItems, handleCart } = this.props;
+    console.log(selectedSizes, cartItems);
     return (
       <>
         <div className="container flex wrap">
-          <Sizes selectedSizes={selectedSizes} handleClick={this.handleClick} />
-          <Main selectedSizes={selectedSizes} handleCart={this.handleCart} />
-          <Cart
-            cartItems={this.state.cartItems}
-            quantityIncrement={this.quantityIncrement}
-            quantityDecrement={this.quantityDecrement}
-            handleDelete={this.handleDelete}
-          />
+          <Sizes />
+          <Main selectedSizes={selectedSizes} handleCart={handleCart} />
+          <Cart />
         </div>
       </>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    selectedSizes: state.selectedSizes,
+    cartItems: state.cartItems,
+  };
+}
+const mapDispatchToProps = {
+  handleCart,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

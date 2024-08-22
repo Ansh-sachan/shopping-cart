@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import { connect } from 'react-redux';
+import CartItem from './CartItem';
 
 class Cart extends Component {
   constructor(props) {
@@ -49,15 +51,7 @@ class Cart extends Component {
               <span className="quantity">{totalQuantity}</span>
             </div>
           </div>
-          {this.props.cartItems.map((p) => (
-            <CartItem
-              item={p}
-              quantityIncrement={this.props.quantityIncrement}
-              quantityDecrement={this.props.quantityDecrement}
-              handleDelete={this.props.handleDelete}
-              key={p.id}
-            />
-          ))}
+          <CartItem />
           <Checkout totalPrice={totalPrice} />
         </aside>
       </>
@@ -65,44 +59,6 @@ class Cart extends Component {
   }
 }
 
-function CartItem(props) {
-  let product = props.item;
-  return (
-    <>
-      <div className="flex cart-item">
-        <div>
-          <img src={`/products/${product.sku}_2.jpg`} alt="" />
-        </div>
-        <div className="item-info">
-          <h3>{product.title}</h3>
-          <p>
-            {product.availableSizes} | {product.style}
-          </p>
-          <span>Quantity : {product.quantity}</span>
-        </div>
-        <div>
-          <button
-            className="cancel-btn"
-            onClick={() => props.handleDelete(product.id)}
-          >
-            x
-          </button>
-          <span className="item-price">
-            {product.currencyFormat + product.price}
-          </span>
-          <div className="flex i-btn">
-            <button onClick={() => props.quantityIncrement(product.id)}>
-              +
-            </button>
-            <button onClick={() => props.quantityDecrement(product.id)}>
-              -
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
 function Checkout(props) {
   return (
     <>
@@ -124,4 +80,10 @@ function Checkout(props) {
     </>
   );
 }
-export default Cart;
+const mapStateToProps = (state) => {
+  return {
+    cartItems: state.cartItems,
+  };
+};
+
+export default connect(mapStateToProps)(Cart);

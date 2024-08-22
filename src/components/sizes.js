@@ -1,4 +1,6 @@
+import { connect } from 'react-redux';
 import data from './data.json';
+import { handleClick } from '../store/action';
 
 function Sizes(props) {
   let sizes = data.products.reduce((acc, cv) => {
@@ -20,7 +22,7 @@ function Sizes(props) {
                     ? 'size-btn active'
                     : 'size-btn'
                 }
-                onClick={() => props.handleClick(size)}
+                onClick={() => props.dispatch(handleClick(size))}
                 key={size}
               >
                 {size}
@@ -33,4 +35,10 @@ function Sizes(props) {
   );
 }
 
-export default Sizes;
+let mapStateToProps = (state) => {
+  return {
+    selectedSizes: state.selectedSizes,
+  };
+};
+
+export default connect(mapStateToProps)(Sizes);
